@@ -386,6 +386,42 @@ open class PropertyHolder {
     var borderImageSlice: MultiValue<BorderImageSlice> by cssprop("-fx-border-image-slice")
     var borderImageWidth: CssBox<Dimension<Dimension.LinearUnits>> by cssprop("-fx-border-image-width")
     var padding: CssBox<Dimension<Dimension.LinearUnits>> by cssprop("-fx-padding")
+    var paddingTop: Dimension<Dimension.LinearUnits>
+        get() = padding.top
+        set(value) {
+            padding = try {
+                padding
+            } catch (e: Exception) {
+                box(0.px)
+            }.copy(top = value)
+        }
+    var paddingRight: Dimension<Dimension.LinearUnits>
+        get() = padding.right
+        set(value) {
+            padding = try {
+                padding
+            } catch (e: Exception) {
+                box(0.px)
+            }.copy(right = value)
+        }
+    var paddingBottom: Dimension<Dimension.LinearUnits>
+        get() = padding.bottom
+        set(value) {
+            padding = try {
+                padding
+            } catch (e: Exception) {
+                box(0.px)
+            }.copy(bottom = value)
+        }
+    var paddingLeft: Dimension<Dimension.LinearUnits>
+        get() = padding.left
+        set(value) {
+            padding = try {
+                padding
+            } catch (e: Exception) {
+                box(0.px)
+            }.copy(left = value)
+        }
     var positionShape: Boolean by cssprop("-fx-position-shape")
     var scaleShape: Boolean by cssprop("-fx-scale-shape")
     var shape: String by cssprop("-fx-shape")
@@ -959,7 +995,7 @@ fun <T : Node> T.setId(cssId: CssRule): T {
 fun <T> box(all: T) = CssBox(all, all, all, all)
 fun <T> box(vertical: T, horizontal: T) = CssBox(vertical, horizontal, vertical, horizontal)
 fun <T> box(top: T, right: T, bottom: T, left: T) = CssBox(top, right, bottom, left)
-open class CssBox<out T>(val top: T, val right: T, val bottom: T, val left: T) {
+data class CssBox<out T>(val top: T, val right: T, val bottom: T, val left: T) {
     override fun toString() = "${PropertyHolder.toCss(top)} ${PropertyHolder.toCss(right)} ${PropertyHolder.toCss(bottom)} ${PropertyHolder.toCss(left)}"
 }
 

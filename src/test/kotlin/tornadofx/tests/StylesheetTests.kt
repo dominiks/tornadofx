@@ -40,6 +40,24 @@ class StylesheetTests {
     val lumpyPseudoClass by csspseudoclass()
 
     @Test
+    fun testPaddingSingle() {
+        val ss = stylesheet {
+            label {
+                paddingLeft = 5.px
+
+                and(hover) {
+                    paddingTop = 10.px
+                    paddingBottom = 12.px
+                }
+            }
+            label {
+                textFill = Color.RED
+            }
+        }
+        println(ss.render())
+    }
+
+    @Test
     fun dimensionalAnalysis() {
         val base = 10.px
         val num = 2
