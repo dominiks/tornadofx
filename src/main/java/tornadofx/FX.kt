@@ -278,6 +278,13 @@ fun EventTarget.addChildIfPossible(node: Node) {
             val tab = Tab(uicmp?.title ?: node.toString(), node)
             tabs.add(tab)
         }
+        is TitledPane -> content = node
+        is Accordion -> if (node is TitledPane) {
+            panes += node
+            if (node.isExpanded) expandedPane = node
+        } else {
+            panes.add(TitledPane((node as? Parent)?.uiComponent<UIComponent>()?.title ?: node.toString(), node))
+        }
         is DataGrid<*> -> { }
         else -> getChildList()?.add(node)
     }

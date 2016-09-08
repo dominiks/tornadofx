@@ -141,7 +141,8 @@ fun <T : Node> BorderPane.center(centerNode: T, op: (T.() -> Unit)? = null): T {
     return opcr(this, centerNode, op)
 }
 
-fun EventTarget.titledpane(title: String, node: Node): TitledPane = opcr(this, TitledPane(title, node))
+fun EventTarget.titledpane(title: String, node: Node? = null, expanded: Boolean = false, op: (TitledPane.() -> Unit)? = null): TitledPane
+        = opcr(this, TitledPane(title, node).apply { isExpanded = expanded }, op)
 
 fun EventTarget.pagination(pageCount: Int? = null, pageIndex: Int? = null, op: (Pagination.() -> Unit)? = null): Pagination {
     val pagination = Pagination()
@@ -177,6 +178,7 @@ fun EventTarget.accordion(vararg panes: TitledPane, op: (Accordion.() -> Unit)? 
     return accordion
 }
 
+@Deprecated("Use 'tilepane(title, node, expanded, op)'")
 fun <T : Node> Accordion.fold(title: String? = null, node: T, op: (T.() -> Unit)? = null): TitledPane {
     val fold = TitledPane(title, node)
     panes += fold
